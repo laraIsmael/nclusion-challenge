@@ -2,7 +2,7 @@
 
 This project renders a 2D visualization of the iterative function:
 
-\[z\_{n+1} = z_n^2 + c, \quad z_0 = 0\]
+**z\_{n+1} = z_n^2 + c**
 
 where **c** is the complex number represented by each pixel in the grid.
 
@@ -38,15 +38,3 @@ The color is a grayscale mapping of how quickly the point escapes.
 2. Replace `Math.sqrt` with squared-magnitude checks
 3. Precompute step sizes before loops
 4. Move heavy iteration to a Web Worker (best upgrade)
-
----
-
-## 📁 File Structure
-
-src/
-├─ components/
-│ └─ ComplexGrid.tsx
-├─ utils/
-│ ├─ iterate.ts
-│ └─ complex.ts (unused after optimization)
-└─ App.tsx
