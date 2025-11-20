@@ -15,9 +15,16 @@
 
 import { type Complex, square, add, magnitude } from "./complex";
 
-export function iterate(c: Complex, maxIter = 200, escapeRadius = 2): number {
+export function oldIterate(
+  c: Complex,
+  maxIter = 200,
+  escapeRadius = 2
+): number {
   //initialize z0
   let z: Complex = { re: 0, im: 0 }; // starter z0 = 0
+
+  //   This creates 2 new objects per iteration × 500 iterations × 360,000 pixels =
+  // 360 million object allocations.
 
   // find z - loop maxIter times calling the given formula
   for (let i = 0; i < maxIter; i++) {
@@ -31,5 +38,32 @@ export function iterate(c: Complex, maxIter = 200, escapeRadius = 2): number {
   }
 
   // if z stays inbound return the max we tested for.
+  return maxIter;
+}
+
+//optimized code:
+export function iterate(
+  cx: number,
+  cy: number,
+  maxIter = 200,
+  escapeRadius = 2
+): number {
+  let zx = 0;
+  let zy = 0;
+
+  const escape2 = escapeRadius * escapeRadius;
+
+  for (let i = 0; i < maxIter; i++) {
+    // z^2 = (zx^2 - zy^2) + 2*zx*zy*i
+    const zx2 = zx * zx;
+    const zy2 = zy * zy;
+
+    if (zx2 + zy2 > escape2) return i;
+
+    const newZy = 2 * zx * zy + cy;
+    zx = zx2 - zy2 + cx;
+    zy = newZy;
+  }
+
   return maxIter;
 }

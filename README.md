@@ -1,21 +1,52 @@
-# Nclusion Challenge
+# Nclusion Take-Home Challenge
 
-Step-by-step of my work:
+This project renders a 2D visualization of the iterative function:
 
-- I started by creating the **utils** folder and making all the calculation there.
+\[z\_{n+1} = z_n^2 + c, \quad z_0 = 0\]
 
-  - The helper function came first as I got a grip on what the equation actually needed.
-  - After that I created the iterate file and function to actually calculate what the challenge needed
+where **c** is the complex number represented by each pixel in the grid.
 
-- From there I went on to the UI portion of the project (my favorite!)
-  - Using the HTML element canvas along with react and tailwind.
-  - I created the component **<ComplexGrid>** to actually put data into the graph
+---
 
-NOTE: Since I was supposed to stop after 4 hours of work (I really worked close to 5 to be fully honest because it took me a little longer to understand the equation) I didn't have time to do any of optimizations that I wanted.
+## 🚀 Features
 
-- Potential optimization:
+- Complex plane spanning **(-2, -2)** to **(2, 2)**
+- Resolution: **600 × 600** (360,000 points)
+- Light color → **bounded**  
+  Dark color → **escaped**
+- Implemented in **React + TypeScript + Canvas + Tailwind**
+- Direct pixel manipulation via **ImageData**
+- Pure mathematical iteration (no libraries)
 
-  1. Remove all function calls and make it inline math (while this does affect performance I wouldn't use it because readability is also very important - specially for future me/engineer that will touch this code later)
-  2. Replace `Math.sqrt()` with a squared check.
-  3. Pre-calculate constants outside for loops - to avoid re-running them every iteration.
-  4. Move for loop calculation block to a Web Worker script
+---
+
+## 🧮 How It Works
+
+Each pixel `(x, y)` maps to a complex value: **c = x + yi**
+
+We iterate: **z = z^2 + c**
+
+A point is considered **unbounded** if: **|z|^2 > 4 (escape radius = 2)**
+
+The color is a grayscale mapping of how quickly the point escapes.
+
+---
+
+## 📈 Possible Optimizations (not fully completed due to the 4-hour limit)
+
+1. Inline math to avoid object allocations
+2. Replace `Math.sqrt` with squared-magnitude checks
+3. Precompute step sizes before loops
+4. Move heavy iteration to a Web Worker (best upgrade)
+
+---
+
+## 📁 File Structure
+
+src/
+├─ components/
+│ └─ ComplexGrid.tsx
+├─ utils/
+│ ├─ iterate.ts
+│ └─ complex.ts (unused after optimization)
+└─ App.tsx
