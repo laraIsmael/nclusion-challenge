@@ -52,7 +52,7 @@ export default function ComplexGridUpgrade() {
     for (let px = 0; px < WIDTH; px++) {
       const cx = -2 + px * dx;
       for (let py = 0; py < HEIGHT; py++) {
-        const cy = 2 - py * dy;
+        const cy = -2 + py * dy;
 
         // inital RGBA value for each pixel
         const index = (py * WIDTH + px) * 4;
